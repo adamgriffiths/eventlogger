@@ -95,7 +95,8 @@ class EventLogger {
 	/**
 	 * Sets the username for EventLog
 	 *
-	 * @param   string  $username  the username
+	 * @param   string       $username  the username
+	 * @return  EventLogger  $this
 	 */
 	public function set_username($username) {
 		$this->username = $username;
@@ -105,7 +106,8 @@ class EventLogger {
 	/**
 	 * Sets the password for EventLog
 	 *
-	 * @param   string  $password  the password
+	 * @param   string       $password  the password
+	 * @return  EventLogger  $this
 	 */
 	public function set_password($password) {
 		$this->password = $password;
@@ -115,7 +117,8 @@ class EventLogger {
 	/**
 	 * Sets the API Key for EventLog
 	 *
-	 * @param   string  $api_key  the api key
+	 * @param   string       $api_key  the api key
+	 * @return  EventLogger  $this
 	 */
 	public function set_api_key($api_key) {
 		$this->api_key = $api_key;
@@ -125,9 +128,9 @@ class EventLogger {
 	/**
 	 * Adds the given log to the queue.  Defaults to an ERROR message.
 	 *
-	 * @param   string    $message  the message
-	 * @param   string    $type     the type
-	 * @return  EventLog  $this
+	 * @param   string       $message  the message
+	 * @param   string       $type     the type
+	 * @return  EventLogger  $this
 	 */
 	public function log($message, $type = EventLogger::ERROR) {
 		$this->logs[] = array(
@@ -140,7 +143,7 @@ class EventLogger {
 	/**
 	 * Sends all the logs to EventLog
 	 *
-	 * @return  EventLog  $this
+	 * @return  EventLogger  $this
 	 */
 	public function send_it() {
 		if (empty($this->logs)) {
