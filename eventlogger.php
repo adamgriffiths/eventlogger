@@ -164,12 +164,12 @@ class EventLogger {
 	 * @return  bool    true on success
 	 * @throws  Exception
 	 */
-	public function write($message, $type = EventLogger::GENERAL) {
+	public function write($message, $type = EventLogger::ERROR) {
 		$fields = array(
-			'username' => $this->username,
-			'password' => $this->password,
+			'username'   => $this->username,
+			'password'   => $this->password,
 			'event_type' => $type,
-			'message' => $message,
+			'message'    => $message,
 		);
 		curl_setopt($this->curl, CURLOPT_URL, $this->url);
 		curl_setopt($this->curl, CURLOPT_POSTFIELDS, http_build_query($fields));
