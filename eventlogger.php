@@ -22,9 +22,16 @@ class EventLogger {
 	const GENERAL = 5;
 	
 	/**
+	 * Holds the Curl handle.
+	 *
+	 * @var  handle
+	 */
+	protected $curl = null;
+
+	/**
 	 * The log queue
 	 *
-	 * @var  string
+	 * @var  array
 	 */
 	protected $logs = array();
 	
