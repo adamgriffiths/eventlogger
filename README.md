@@ -1,5 +1,7 @@
 # EventLogger
 
+Version: 1.0
+
 A simple API wrapper for EventLog (<http://eventlogapp.com>).
 
 ## Usage
@@ -34,3 +36,7 @@ You can also use any custom Event Type ID:
 ```php
 $logger->log('What is the meaning of life?', 42);
 ```
+
+## License
+
+EventLogger is released under the MIT License and is copyrighted 2011 Dan Horrigan.
