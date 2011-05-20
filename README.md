@@ -9,7 +9,7 @@ A simple API wrapper for EventLog (<http://eventlogapp.com>).
 #### Basic Usage
 
 ```php
-$logger = new EventLogger('foo@bar.com', 'password', 'your\_app\_api\_key');
+$logger = new EventLogger('foo@bar.com', 'password', 'your_app_api_key');
 $logger->log('Something went horribly wrong!');
 ```
 

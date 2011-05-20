@@ -62,7 +62,6 @@ class EventLogger {
 	 * @param  string  $username  the EventLog username (email)
 	 * @param  string  $password  the EventLog password
 	 * @param  string  $api_key   the EventLog API key
-	 * @author Dan Horrigan
 	 */
 	public function __construct($username = '', $password = '', $api_key = '') {
 		$this->username = $username;
@@ -152,7 +151,7 @@ class EventLogger {
 	 *
 	 * @param   string  $message  the message
 	 * @param   string  $type     the event type
-	 * @return  bool true on success
+	 * @return  bool    true on success
 	 * @throws  Exception
 	 */
 	public function write($message, $type = EventLogger::GENERAL) {
