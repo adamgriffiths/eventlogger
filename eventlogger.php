@@ -36,6 +36,13 @@ class EventLogger {
 	protected $logs = array();
 	
 	/**
+	 * The log levels -- used for sending multiple logs at a time
+	 *
+	 * @var  array
+	 */
+	protected $levels = array();
+	
+	/**
 	 * The EventLog username
 	 *
 	 * @var  string
@@ -133,10 +140,9 @@ class EventLogger {
 	 * @return  EventLogger  $this
 	 */
 	public function log($message, $type = EventLogger::ERROR) {
-		$this->logs[] = array(
-			'message' => $message,
-			'type'    => $type,
-		);
+		$this->logs[] = $message;
+		$this->levels[] = $type;
+		
 		return $this;
 	}
 
@@ -149,10 +155,14 @@ class EventLogger {
 		if (empty($this->logs)) {
 			return;
 		}
-		
-		foreach ($this->logs as $log) {
-			$this->write($log['message'], $log['type']);
-		}
+
+		$data['event_type'] = $this->levels;
+		$data['message'] = $this->logs;
+
+		$final_data = json_encode($data);
+
+		$this->write($final_data);
+
 		return $this;
 	}
 
@@ -164,12 +174,11 @@ class EventLogger {
 	 * @return  bool    true on success
 	 * @throws  Exception
 	 */
-	public function write($message, $type = EventLogger::ERROR) {
+	public function write($final_data) {
 		$fields = array(
 			'username'   => $this->username,
 			'password'   => $this->password,
-			'event_type' => $type,
-			'message'    => $message,
+			'messages'    => $final_data,
 		);
 		curl_setopt($this->curl, CURLOPT_URL, $this->url);
 		curl_setopt($this->curl, CURLOPT_POSTFIELDS, http_build_query($fields));
