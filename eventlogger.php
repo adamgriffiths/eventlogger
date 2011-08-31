@@ -178,7 +178,7 @@ class EventLogger {
 		$fields = array(
 			'username'   => $this->username,
 			'password'   => $this->password,
-			'messages'    => $final_data,
+			'messages'   => $final_data,
 		);
 		curl_setopt($this->curl, CURLOPT_URL, $this->url);
 		curl_setopt($this->curl, CURLOPT_POSTFIELDS, http_build_query($fields));
