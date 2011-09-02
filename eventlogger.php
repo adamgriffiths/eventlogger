@@ -156,16 +156,23 @@ class EventLogger {
 			return;
 		}
 
-		$data['event_type'] = $this->levels;
-		$data['message'] = $this->logs;
+		if(count($this->levels) == 1)
+		{
+			$this->write_single($this->levels[0], $this->logs[0]);
+		}
+		else
+		{
+			$data['event_type'] = $this->levels;
+			$data['message'] = $this->logs;
 
-		$final_data = json_encode($data);
+			$final_data = json_encode($data);
 
-		$this->write($final_data);
+			$this->write_multiple($final_data);
+		}
 
 		return $this;
 	}
-
+	
 	/**
 	 * Writes the log out to EventLog.  Will throw an exception on error.
 	 *
@@ -174,7 +181,37 @@ class EventLogger {
 	 * @return  bool    true on success
 	 * @throws  Exception
 	 */
-	public function write($final_data) {
+	public function write_single($event_type, $message) {
+		$fields = array(
+			'username'   => $this->username,
+			'password'   => $this->password,
+			'event_type' => $event_type,
+			'message'    => $message,
+		);
+		curl_setopt($this->curl, CURLOPT_URL, $this->url);
+		curl_setopt($this->curl, CURLOPT_POSTFIELDS, http_build_query($fields));
+		curl_setopt($this->curl, CURLOPT_HTTPHEADER, array("X_API_KEY: {$this->api_key}"));
+
+		$result = json_decode(curl_exec($this->curl));
+		
+		var_dump($result);
+		
+		if ( ! $result->status) {
+			throw new Exception('EventLog Error: '.$result->message);
+		}
+		return true;
+	}
+	
+	
+	/**
+	 * Writes the log out to EventLog.  Will throw an exception on error.
+	 *
+	 * @param   string  $message  the message
+	 * @param   string  $type     the event type
+	 * @return  bool    true on success
+	 * @throws  Exception
+	 */
+	public function write_multiple($final_data) {
 		$fields = array(
 			'username'   => $this->username,
 			'password'   => $this->password,
@@ -185,7 +222,9 @@ class EventLogger {
 		curl_setopt($this->curl, CURLOPT_HTTPHEADER, array("X_API_KEY: {$this->api_key}"));
 
 		$result = json_decode(curl_exec($this->curl));
-
+		
+		var_dump($result);
+		
 		if ( ! $result->status) {
 			throw new Exception('EventLog Error: '.$result->message);
 		}
