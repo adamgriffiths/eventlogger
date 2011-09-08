@@ -183,7 +183,7 @@ class EventLogger {
 	 */
 	public function write_single($event_type, $message) {
 		$fields = array(
-			'username'   => $this->username,
+			'email'      => $this->username,
 			'password'   => $this->password,
 			'event_type' => $event_type,
 			'message'    => $message,
@@ -213,7 +213,7 @@ class EventLogger {
 	 */
 	public function write_multiple($final_data) {
 		$fields = array(
-			'username'   => $this->username,
+			'email'      => $this->username,
 			'password'   => $this->password,
 			'messages'   => $final_data,
 		);
